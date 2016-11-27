@@ -1,0 +1,9 @@
+Theoutput will be, Option C. Output Prints : 
+Parent's method2()
+Parent's method1()
+
+
+////////////////////My comments: //////
+
+
+Since we are creating the actual object for child class, it will print the child class methods.
