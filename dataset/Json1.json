@@ -1,0 +1,50 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"containername": {
+				"type": "string"
+			},
+			"foldername": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().foldername",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().containername",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"DEPARTMENT_ID": {
+					"type": "integer"
+				},
+				"DEPARTMENT_NAME": {
+					"type": "string"
+				},
+				"MANAGER_ID": {
+					"type": "integer"
+				},
+				"LOCATION_ID": {
+					"type": "integer"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

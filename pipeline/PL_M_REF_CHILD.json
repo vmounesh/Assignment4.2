@@ -1,0 +1,123 @@
+{
+	"name": "PL_M_REF_CHILD",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.childitems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "JsonSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"wildcardFileName": "*.json",
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "JsonReadSettings"
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Json1",
+									"type": "DatasetReference",
+									"parameters": {
+										"containername": {
+											"value": "@pipeline().parameters.sourcecontainer",
+											"type": "Expression"
+										},
+										"foldername": {
+											"value": "@pipeline().parameters.sourcefolder",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Json1",
+									"type": "DatasetReference",
+									"parameters": {
+										"containername": {
+											"value": "@pipeline().parameters.archivecontainer",
+											"type": "Expression"
+										},
+										"foldername": {
+											"value": "@pipeline().parameters.archivefolder",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"sourcefolder": {
+				"type": "string",
+				"defaultValue": "sourcedata"
+			},
+			"sourcecontainer": {
+				"type": "string",
+				"defaultValue": "raw-container"
+			},
+			"archivefolder": {
+				"type": "string",
+				"defaultValue": "archivefolder"
+			},
+			"archivecontainer": {
+				"type": "string",
+				"defaultValue": "archivecontainer"
+			},
+			"tablename": {
+				"type": "string",
+				"defaultValue": "M_REF"
+			},
+			"stagetablename": {
+				"type": "string",
+				"defaultValue": "STG_M_REF"
+			},
+			"childitems": {
+				"type": "array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-06-23T07:02:31Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
